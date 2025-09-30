@@ -4,6 +4,8 @@
  */
 package grupo5univercidad;
 
+import java.sql.Connection;
+
 /**
  *
  * @author Brian D
@@ -14,7 +16,9 @@ public class Grupo5Univercidad {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-    }
+        // Conectando con la base de datos
+      Conexion con = new Conexion("jdbc:mariadb://localhost:3306/grupogp5universidad", "root","");
+      con.buscarConexion();
+     }
     
 }
