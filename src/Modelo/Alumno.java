@@ -1,18 +1,19 @@
 
-package grupo5univercidad;
+package Modelo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
 public class Alumno {
     private int idAlumno = -1;
-    private int dni;
+    private String dni;
     private String apellido;
     private String nombre;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private boolean estado;
 
-    public Alumno(int idAlumno, int dni, String apellido, String nombre, Date fechaNacimiento, boolean estado) {
+    public Alumno(int idAlumno, String dni, String apellido, String nombre, LocalDate fechaNacimiento, boolean estado) {
         this.idAlumno = idAlumno;
         this.dni = dni;
         this.apellido = apellido;
@@ -29,11 +30,11 @@ public class Alumno {
         this.idAlumno = idAlumno;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -53,11 +54,11 @@ public class Alumno {
         this.nombre = nombre;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
