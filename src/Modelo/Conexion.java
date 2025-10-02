@@ -33,7 +33,7 @@ public class Conexion {
                 System.out.println("No es posible establecer connection");
                 //JOptionPane.showMessageDialog(null,"No es posible establecer la conexion...");
             }catch (SQLException ex){
-                System.out.println("ADFDASGFD");
+                System.out.println("No es posible conectarse a la base de datos");
                 //JOptionPane.showMessageDialog(null, "Base de datos no encontrada...");
                 }
             
