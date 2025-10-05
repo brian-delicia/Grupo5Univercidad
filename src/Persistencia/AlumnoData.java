@@ -54,18 +54,7 @@ public class AlumnoData {
     public void actualizarAlumno(Alumno alum1){
     
     
-        
-        
-        
-        
-    
-    String query=" UPDATE alumno set dni=? , apellido=?, nombre=?, fechaNacimiento=?,  estado=? where idAlumno=? "; 
-    
-    
-
-    
-    
-    
+       String query=" UPDATE alumno set dni=? , apellido=?, nombre=?, fechaNacimiento=?,  estado=? where idAlumno=? "; 
     
     try {
         PreparedStatement ps = conn.prepareStatement(query);
@@ -76,44 +65,30 @@ public class AlumnoData {
         ps.setString(3, alum1.getNombre());
         ps.setDate(4, fechaSQL);
         ps.setBoolean(5, alum1.isEstado());
-       ps.setInt(6, alum1.getIdAlumno());
-        
-        
+        ps.setInt(6, alum1.getIdAlumno());
+     
         ps.executeUpdate();
        
-        
-        
-        
         } catch (SQLException e){
-            System.out.println("Error... ");
-               
+            System.out.println("Error... ");      
         }
-       
     }
     
     
     
+     public void bajaLogica(Alumno alum1){
+         //este metodo cambia solo el estado del alumno
+        
+       String query=" UPDATE alumno set estado=? where idAlumno=? "; 
     
     
-     public void ElimnarBajaLogica(Alumno alum1){
-    
-    
+     try {
+        PreparedStatement ps = conn.prepareStatement(query);
            
-            
-    String query=" UPDATE alumno set estado=? where idAlumno=? "; 
-    
-    
-    try {
-        PreparedStatement ps = conn.prepareStatement(query);
-   
-                 
         ps.setBoolean(1, alum1.isEstado());
-       ps.setInt(2, alum1.getIdAlumno());
-          ps.executeUpdate();
+        ps.setInt(2, alum1.getIdAlumno());
+        ps.executeUpdate();
        
-        
-        
-        
         } catch (SQLException e){
             System.out.println("Error... ");
                
@@ -122,29 +97,20 @@ public class AlumnoData {
     }
      
      
-     public void EliminarTotal(Alumno alum2){
-     
-         
-                 
-    String query=" Delete from alumno where idAlumno=? "; 
+     public void eliminarAlumno(Alumno alum2){
+             
+       String query=" Delete from alumno where idAlumno=? "; 
     
-    
-    try {
+     try {
         PreparedStatement ps = conn.prepareStatement(query);
    
-                 
-       
-       ps.setInt(1, alum2.getIdAlumno());
+          ps.setInt(1, alum2.getIdAlumno());
           ps.executeUpdate();
        
-        
-        
-        
         } catch (SQLException e){
             System.out.println("Error... ");
                
-        }
-       
+        } 
     }
      
      
@@ -152,8 +118,7 @@ public class AlumnoData {
      
      public void selectTodo() {
      
-     
-     //obtener todos los empleados
+     //obtener todos los alumnos
           
           String sql="Select * from alumno";
           
@@ -168,35 +133,18 @@ public class AlumnoData {
              while (resultado.next()){
              
              System.out.println("ID "+resultado.getInt("idAlumno"));
-              System.out.println("DNI "+resultado.getString("dni"));
-              System.out.println("Apellido "+resultado.getString("apellido"));
-              System.out.println("Nombre "+resultado.getString("nombre"));         
+             System.out.println("DNI "+resultado.getString("dni"));
+             System.out.println("Apellido "+resultado.getString("apellido"));
+             System.out.println("Nombre "+resultado.getString("nombre"));         
              System.out.println("Fecha de Nacimiento "+resultado.getDate("fechaNacimiento"));
-              System.out.println("Estado" + resultado.getBoolean("estado"));
-                      
-             
+             System.out.println("Estado " + resultado.getBoolean("estado"));
              
              }            
-             
-        
-        
+            
         } catch (SQLException ex){
          JOptionPane.showMessageDialog(null, "Error de conexion" );
         
-        
         }
-          
-          
-          // ESTO DEVUELVE UN RESULSET, es como una matriz con columnas y filas
-      
-         
-         // resulset le pregunta si hay una fila para recorrer con el metodo next
-          
-         
-         
-         
-     
-     
      
      }
      
@@ -205,15 +153,10 @@ public class AlumnoData {
      
      public void selectEspecifico(Alumno alumno3) {
      
-     
-     //obtener todos los empleados
-          
-          String sql="Select * from alumno where idAlumno=? ";
+          String sql="Select  from alumno where idAlumno=? ";
           
           PreparedStatement ps;
-          
-
-            
+           
         try {
             ps = conn.prepareStatement(sql);
             
@@ -224,36 +167,23 @@ public class AlumnoData {
              while (resultado.next()){
              
              System.out.println("ID "+resultado.getInt("idAlumno"));
-              System.out.println("DNI "+resultado.getString("dni"));
-              System.out.println("Apellido "+resultado.getString("apellido"));
-              System.out.println("Nombre "+resultado.getString("nombre"));         
+             System.out.println("DNI "+resultado.getString("dni"));
+             System.out.println("Apellido "+resultado.getString("apellido"));
+             System.out.println("Nombre "+resultado.getString("nombre"));         
              System.out.println("Fecha de Nacimiento "+resultado.getDate("fechaNacimiento"));
-              System.out.println("Estado " + resultado.getBoolean("estado"));
+             System.out.println("Estado " + resultado.getBoolean("estado"));
            
-             
-             
              }            
-             
-        
-        
+            
         } catch (SQLException ex){
          JOptionPane.showMessageDialog(null, "Error de conexion" );
         
-        
         }
           
-          
           // ESTO DEVUELVE UN RESULSET, es como una matriz con columnas y filas
-      
-         
          // resulset le pregunta si hay una fila para recorrer con el metodo next
           
-         
-         
-         
-     
-     
-     
+       
      }
      
      
