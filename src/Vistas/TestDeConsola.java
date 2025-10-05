@@ -27,21 +27,107 @@ public class TestDeConsola extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        Escritorio = new javax.swing.JDesktopPane();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuAlumno = new javax.swing.JMenu();
+        menuMateria = new javax.swing.JMenu();
+
+        jMenu1.setText("jMenu1");
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenu4.setText("jMenu4");
+
+        jMenuItem2.setText("jMenuItem2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 739, Short.MAX_VALUE)
+        );
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 484, Short.MAX_VALUE)
+        );
+
+        jInternalFrame1.setVisible(true);
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        menuAlumno.setText("Alumno");
+        menuAlumno.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                menuAlumnoItemStateChanged(evt);
+            }
+        });
+        jMenuBar1.add(menuAlumno);
+
+        menuMateria.setText("Materia");
+        menuMateria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                menuMateriaItemStateChanged(evt);
+            }
+        });
+        jMenuBar1.add(menuMateria);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Escritorio)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Escritorio)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuAlumnoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_menuAlumnoItemStateChanged
+        // TODO add your handling code here:
+          Escritorio.removeAll();
+        Escritorio.repaint();
+        VistaAlumno alum  = new VistaAlumno();
+        Escritorio.add(alum);
+        alum.setVisible(true);
+        Escritorio.moveToFront(alum);
+    }//GEN-LAST:event_menuAlumnoItemStateChanged
+
+    private void menuMateriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_menuMateriaItemStateChanged
+        // TODO add your handling code here:
+         Escritorio.removeAll();
+        Escritorio.repaint();
+        VistaMateria mate =new VistaMateria();
+        Escritorio.add(mate);
+        mate.setVisible(true);
+        Escritorio.moveToFront(mate);
+    }//GEN-LAST:event_menuMateriaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -79,5 +165,14 @@ public class TestDeConsola extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenu menuAlumno;
+    private javax.swing.JMenu menuMateria;
     // End of variables declaration//GEN-END:variables
 }
