@@ -153,7 +153,7 @@ public class AlumnoData {
      
      public void selectEspecifico(Alumno alumno3) {
      
-          String sql="Select  from alumno where idAlumno=? ";
+          String sql="Select * from alumno where idAlumno=? ";
           
           PreparedStatement ps;
            
