@@ -47,7 +47,7 @@ public class Grupo5Universidad {
       
     //actualizamos fecha y nombre
     /*LocalDate fecha2=LocalDate.of(1999,9,15);
-    Alumno alumnito2=new Alumno(9,"39000789","Alvarez", "Martin",fecha2,false );   
+    Alumno alumnito2=new Alumno(5,"39000789","Alvarez", "Martin",fecha2,false );   
     AlumnoData alumn6=new AlumnoData(con);*/
     
     //alumn6.actualizarAlumno(alumnito2);
