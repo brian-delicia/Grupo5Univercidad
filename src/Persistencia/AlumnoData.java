@@ -21,6 +21,9 @@ public class AlumnoData {
     
     private Connection conn= null;
 
+    public AlumnoData() {
+    }
+
     public AlumnoData(Conexion conexion) {
         
         this.conn= conexion.buscarConexion();
@@ -148,16 +151,16 @@ public class AlumnoData {
      
      
      
-     public void selectEspecifico(Alumno alumno3) {
+     public void buscarXDNI(Alumno alumno3) {
      
-          String sql="Select * from alumno where idAlumno=? ";
+          String sql="Select * from alumno where dni=? ";
           
           PreparedStatement ps;
            
         try {
             ps = conn.prepareStatement(sql);
             
-             ps.setInt(1, alumno3.getIdAlumno());     
+             ps.setString(1, alumno3.getDni());     
             
              ResultSet resultado= ps.executeQuery();
              
