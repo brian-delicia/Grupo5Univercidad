@@ -257,15 +257,14 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
       
         
                 
-               
-                 
+                               
                  
            try{
                      
                      
-                    Integer  dni2=Integer.parseInt(jtDNI.getText().trim());
+         int dni=Integer.parseInt(jtDNI.getText());
                                                               
-                      
+              
        
                       
        String apellido=jtApellido.getText().trim();
@@ -280,7 +279,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
              if (!jtApellido.getText().matches("[a-zA-Z ]+")|| !jtNombre.getText().matches("[a-zA-Z ]+")) {
                  
                  JOptionPane.showMessageDialog(null, "Solo se permiten letras en NOMBRE,APELLIDO");
-                 
+                 return;
              }
                  
                                  
@@ -288,8 +287,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
              }
                
                  Boolean estado=rbEstado.isSelected();
-                 
-                 
+                                  
                  java.util.Date sfecha=jDateChooser1.getDate();
                  
                  LocalDate fechaNac=sfecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -297,20 +295,36 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                            
                  
                  
+                 
                  if(alumno1==null){
+                     
+                     
+               
                  
                      
-                   alumno1 =new Alumno(String.valueOf(dni2),apellido,nombre,fechaNac, estado);
+                   alumno1 =new Alumno(dni,apellido,nombre,fechaNac, estado);
+                   
+                   aluData.guardarAlumno(alumno1);
+                   
+                   limpiarCampos();
+                   
+                   JOptionPane.showMessageDialog(this, "Alumno guardado");
                  
                  }
                  
                  else{
                  
                  
-                 
-                 
+                  JOptionPane.showMessageDialog(this, "No se puede agregar alumno");
                  
                  }
+                 
+                  
+                 
+                 
+                 
+                 
+                 
                  
                  
                  
@@ -318,13 +332,14 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
              
                JOptionPane.showMessageDialog(this, "Debe ingresar un DNI válido");
          
-      
+                  } 
+           
+           
                  
         
-        
-        
+              
     }//GEN-LAST:event_jbAgregarActionPerformed
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BajaLogica;
@@ -352,7 +367,7 @@ private void limpiarCampos(){
   
     jtApellido.setText("");
     jtNombre.setText("");
-    jDateChooser1.setDate(new Date());
+    jDateChooser1.setDate(null);
     rbEstado.setSelected(true);
 
 }

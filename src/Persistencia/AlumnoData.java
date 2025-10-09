@@ -40,7 +40,7 @@ public class AlumnoData {
         PreparedStatement ps = conn.prepareStatement(query);
         LocalDate fechaUtil = alum.getFechaNacimiento();
         java.sql.Date fechaSQL = java.sql.Date.valueOf(fechaUtil);
-        ps.setString(1, alum.getDni());
+        ps.setInt(1, alum.getDni());
         ps.setString(2, alum.getApellido());
         ps.setString(3, alum.getNombre());
         ps.setDate(4, fechaSQL);
@@ -49,6 +49,9 @@ public class AlumnoData {
         
         } catch (SQLException e){
             System.out.println("Error... ");
+            
+            
+           
                
         }
        
@@ -64,7 +67,7 @@ public class AlumnoData {
         PreparedStatement ps = conn.prepareStatement(query);
         LocalDate fechaUtil = alum1.getFechaNacimiento();
         java.sql.Date fechaSQL = java.sql.Date.valueOf(fechaUtil);
-        ps.setString(1, alum1.getDni());
+        ps.setInt(1, alum1.getDni());
         ps.setString(2, alum1.getApellido());
         ps.setString(3, alum1.getNombre());
         ps.setDate(4, fechaSQL);
@@ -138,7 +141,7 @@ public class AlumnoData {
                  
               Alumno alumno= new Alumno();
               alumno.setIdAlumno(resultado.getInt("idAlumno"));
-              alumno.setDni(resultado.getString("dni"));
+              alumno.setDni(resultado.getInt("dni"));
               alumno.setApellido(resultado.getString("apellido"));
               alumno.setNombre(resultado.getString("nombre"));         
               alumno.setFechaNacimiento(resultado.getDate("fechaNacimiento").toLocalDate());
@@ -173,7 +176,7 @@ public class AlumnoData {
              if(resultado.next()){
               alumno= new Alumno(); 
               alumno.setIdAlumno(id);
-              alumno.setDni(resultado.getString("dni"));
+              alumno.setDni(resultado.getInt("dni"));
               alumno.setApellido(resultado.getString("apellido"));
               alumno.setNombre(resultado.getString("nombre"));         
               alumno.setFechaNacimiento(resultado.getDate("fechaNacimiento").toLocalDate());
@@ -210,7 +213,7 @@ public class AlumnoData {
              if(resultado.next()){
               alumno= new Alumno(); 
               alumno.setIdAlumno(resultado.getInt("idAlumno"));
-              alumno.setDni(resultado.getString("dni"));
+              alumno.setDni(resultado.getInt("dni"));
               alumno.setApellido(resultado.getString("apellido"));
               alumno.setNombre(resultado.getString("nombre"));         
               alumno.setFechaNacimiento(resultado.getDate("fechaNacimiento").toLocalDate());
