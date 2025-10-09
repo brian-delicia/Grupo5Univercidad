@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 /**
  *
@@ -20,10 +21,13 @@ import javax.swing.JOptionPane;
 public class AlumnoData {
     
     private Connection conn= null;
+    
+    
 
     public AlumnoData() {
     }
-
+    
+    
     public AlumnoData(Conexion conexion) {
         
         this.conn= conexion.buscarConexion();
@@ -76,18 +80,19 @@ public class AlumnoData {
     
     
     
-     public void bajaLogica(Alumno alum1){
+     public void bajaLogica(int id){
          //este metodo cambia solo el estado del alumno
         
-       String query=" UPDATE alumno set estado=? where idAlumno=? "; 
+       String query=" UPDATE alumno set estado=0 where idAlumno=? "; 
     
     
      try {
-        PreparedStatement ps = conn.prepareStatement(query);
-           
-        ps.setBoolean(1, alum1.isEstado());
-        ps.setInt(2, alum1.getIdAlumno());
-        ps.executeUpdate();
+        PreparedStatement ps = conn.prepareStatement(query); 
+        ps.setInt(1, id);
+        int exito=ps.executeUpdate();
+        if(exito ==1){
+            JOptionPane.showMessageDialog(null, "Alumno dado de baja");
+        }
        
         } catch (SQLException e){
             System.out.println("Error... ");
@@ -97,14 +102,14 @@ public class AlumnoData {
     }
      
      
-     public void eliminarAlumno(Alumno alum2){
+     public void eliminarAlumno(int id){
              
        String query=" Delete from alumno where idAlumno=? "; 
     
      try {
-        PreparedStatement ps = conn.prepareStatement(query);
+          PreparedStatement ps = conn.prepareStatement(query);
    
-          ps.setInt(1, alum2.getIdAlumno());
+          ps.setInt(1, id);
           ps.executeUpdate();
        
         } catch (SQLException e){
@@ -116,70 +121,113 @@ public class AlumnoData {
      
      
      
-     public void selectTodo() {
+     public ArrayList<Alumno> listarAlumnos() {
      
      //obtener todos los alumnos
           
-          String sql="Select * from alumno";
-          
-          PreparedStatement ps;
+          String sql="Select * from alumno where estado= 1";
+          ArrayList <Alumno> alumnos= new ArrayList();
+         
           
             
         try {
-            ps = conn.prepareStatement(sql);
-            
+             PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet resultado= ps.executeQuery();
              
              while (resultado.next()){
-             
-             System.out.println("ID "+resultado.getInt("idAlumno"));
-             System.out.println("DNI "+resultado.getString("dni"));
-             System.out.println("Apellido "+resultado.getString("apellido"));
-             System.out.println("Nombre "+resultado.getString("nombre"));         
-             System.out.println("Fecha de Nacimiento "+resultado.getDate("fechaNacimiento"));
-             System.out.println("Estado " + resultado.getBoolean("estado"));
-             
-             }            
+                 
+              Alumno alumno= new Alumno();
+              alumno.setIdAlumno(resultado.getInt("idAlumno"));
+              alumno.setDni(resultado.getString("dni"));
+              alumno.setApellido(resultado.getString("apellido"));
+              alumno.setNombre(resultado.getString("nombre"));         
+              alumno.setFechaNacimiento(resultado.getDate("fechaNacimiento").toLocalDate());
+              alumno.setEstado(resultado.getBoolean("estado"));
+              
+              alumnos.add(alumno);
+             }   
+             ps.close();
             
         } catch (SQLException ex){
          JOptionPane.showMessageDialog(null, "Error de conexion" );
         
         }
-     
+        return alumnos;
      }
      
      
      
      
-     public void buscarXDNI(Alumno alumno3) {
+     public Alumno buscarAlumno(int id) {
      
-          String sql="Select * from alumno where dni=? ";
+          String sql="Select * from alumno where idAlumno=? ";
           
-          PreparedStatement ps;
+         
+          Alumno alumno= null;
            
         try {
-            ps = conn.prepareStatement(sql);
-            
-             ps.setString(1, alumno3.getDni());     
-            
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ps.setInt(1, id); 
              ResultSet resultado= ps.executeQuery();
              
-             while (resultado.next()){
-             
-             System.out.println("ID "+resultado.getInt("idAlumno"));
-             System.out.println("DNI "+resultado.getString("dni"));
-             System.out.println("Apellido "+resultado.getString("apellido"));
-             System.out.println("Nombre "+resultado.getString("nombre"));         
-             System.out.println("Fecha de Nacimiento "+resultado.getDate("fechaNacimiento"));
-             System.out.println("Estado " + resultado.getBoolean("estado"));
+             if(resultado.next()){
+              alumno= new Alumno(); 
+              alumno.setIdAlumno(id);
+              alumno.setDni(resultado.getString("dni"));
+              alumno.setApellido(resultado.getString("apellido"));
+              alumno.setNombre(resultado.getString("nombre"));         
+              alumno.setFechaNacimiento(resultado.getDate("fechaNacimiento").toLocalDate());
+              alumno.setEstado(resultado.getBoolean("estado"));
            
-             }            
-            
+             }  else{
+                 
+                 JOptionPane.showMessageDialog(null, "No se encontro el alumno");
+             }          
+             ps.close();
+             
         } catch (SQLException ex){
          JOptionPane.showMessageDialog(null, "Error de conexion" );
         
         }
+        
+        return alumno;
+          // ESTO DEVUELVE UN RESULSET, es como una matriz con columnas y filas
+         // resulset le pregunta si hay una fila para recorrer con el metodo next
           
+       
+     }
+     
+     public Alumno buscarAlumnoPorDni(String dni) {
+     
+          String sql="Select * from alumno where dni=? ";
+          Alumno alumno= null;
+           
+        try {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ps.setString(1, dni); 
+             ResultSet resultado= ps.executeQuery();
+             
+             if(resultado.next()){
+              alumno= new Alumno(); 
+              alumno.setIdAlumno(resultado.getInt("idAlumno"));
+              alumno.setDni(resultado.getString("dni"));
+              alumno.setApellido(resultado.getString("apellido"));
+              alumno.setNombre(resultado.getString("nombre"));         
+              alumno.setFechaNacimiento(resultado.getDate("fechaNacimiento").toLocalDate());
+              alumno.setEstado(resultado.getBoolean("estado"));
+           
+             }  else{
+                 
+                 JOptionPane.showMessageDialog(null, "No se encontro el alumno");
+             }          
+             ps.close();
+             
+        } catch (SQLException ex){
+         JOptionPane.showMessageDialog(null, "Error de conexion" );
+        
+        }
+        
+        return alumno;
           // ESTO DEVUELVE UN RESULSET, es como una matriz con columnas y filas
          // resulset le pregunta si hay una fila para recorrer con el metodo next
           
@@ -188,43 +236,6 @@ public class AlumnoData {
      
      
      
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-}
-     
-     
-         
-     
-     
-     
-         
-   
-    
-    
-    
-    
-    
 
+ }
+     

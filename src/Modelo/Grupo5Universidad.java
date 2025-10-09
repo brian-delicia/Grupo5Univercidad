@@ -17,9 +17,10 @@ public class Grupo5Universidad {
      
  
       
-     LocalDate fecha1=LocalDate.of(1990,3,27);
-    Alumno alum=new Alumno(1,"34845223","Alcaraz", "Fatima",fecha1,true ); 
+    //LocalDate fecha1=LocalDate.of(1990,3,27);
+    //Alumno alum=new Alumno(1,"34845223","Alcaraz", "Fatima",fecha1,true ); 
     AlumnoData alumno1=new AlumnoData(con);
+    //alumno1.actualizarAlumno(alum);
     /*alumno1.guardarAlumno(alum);
      
     LocalDate fecha2=LocalDate.of(1986,8,19);
@@ -55,8 +56,13 @@ public class Grupo5Universidad {
     //alumn6.eliminarAlumno(alumnito2);
     //alumno1.selectEspecifico(alum);
         System.out.println("------------------------------------");
+       Alumno alumnoEncontrado= alumno1.buscarAlumnoPorDni("31123456");
+        System.out.println(alumnoEncontrado.getApellido());
+        System.out.println(alumnoEncontrado.getDni());
+        System.out.println("------------------------------------");
+   
 
-    alumno1.selectTodo();
+   
     
   
 }

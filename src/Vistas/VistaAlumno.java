@@ -5,7 +5,11 @@
 package Vistas;
 
 import Modelo.Alumno;
+import Modelo.Conexion;
 import Persistencia.AlumnoData;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +17,11 @@ import javax.swing.JOptionPane;
  * @author Brian D
  */
 public class VistaAlumno extends javax.swing.JInternalFrame {
-        private AlumnoData aluData = new AlumnoData();
-         private Alumno alumno1 = null;
-    /**
-     * Creates new form VistaAlumno
-     */
+        Conexion con = new Conexion("jdbc:mariadb://localhost:3306/grupogp5universidad", "root","");
+       
+        private AlumnoData aluData = new AlumnoData(con);
+        private Alumno alumno1 = null;
+    
     public VistaAlumno() {
         initComponents();
     }
@@ -47,9 +51,9 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        rbEstado = new javax.swing.JRadioButton();
         btnBuscar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
@@ -102,7 +106,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Estado");
 
-        jRadioButton1.setText("Activo");
+        rbEstado.setText("Activo");
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -138,8 +142,8 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jtNombre)
                                         .addComponent(jtApellido)
-                                        .addComponent(jRadioButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)))
+                                        .addComponent(rbEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(77, 77, 77)
                                     .addComponent(IdAlumno)
@@ -185,10 +189,10 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
+                    .addComponent(rbEstado)
                     .addComponent(jLabel8))
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -232,25 +236,26 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtDNIActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        
         try{
-        Integer DNI= Integer.parseInt(jtDNI.getText().trim());
-        aluData.buscarXDNI(alumno1);
-         if( alumno1 == null){
-             alumno1.setApellido(jtApellido.getText());
-             
-        
+        String DNI= jtDNI.getText().trim();
+        alumno1 =aluData.buscarAlumnoPorDni(DNI);
+         if( alumno1 != null){
+             jtIdalumno.setText(String.valueOf(alumno1.getIdAlumno()));
+             jtApellido.setText(alumno1.getApellido());
+             jtNombre.setText(alumno1.getNombre());
+             rbEstado.setSelected(alumno1.isEstado());
+             LocalDate fNac= alumno1.getFechaNacimiento();
+             java.util.Date fecha = java.util.Date.from(fNac.atStartOfDay(ZoneId.systemDefault()).toInstant());
+             jDateChooser.setDate(fecha);
+           
          } 
-        
-        
-        
-        
-        
+         
         }catch(NumberFormatException ex){
-          
-               
-            
-        JOptionPane.showMessageDialog(this, "solo puede ingresar numeros ");}
+           
+        JOptionPane.showMessageDialog(this, "Solo puede ingresar numeros ");
+        
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
 
@@ -260,7 +265,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton jBActualizar;
     private javax.swing.JButton jBorrar;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -268,11 +273,28 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JButton jbAgregar;
     private javax.swing.JTextField jtApellido;
     private javax.swing.JTextField jtDNI;
     private javax.swing.JTextField jtIdalumno;
     private javax.swing.JTextField jtNombre;
+    private javax.swing.JRadioButton rbEstado;
     // End of variables declaration//GEN-END:variables
+
+
+private void limpiarCampos(){
+    jtDNI.setText("");
+    jtIdalumno.setText("");
+    jtApellido.setText("");
+    jtNombre.setText("");
+    jDateChooser.setDate(new Date());
+    rbEstado.setSelected(true);
+
+}
+
+
+
+
+
+
 }
