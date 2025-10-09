@@ -25,6 +25,19 @@ public class Alumno {
         this.estado = estado;
     }
 
+    public Alumno(String dni, String apellido, String nombre, LocalDate fechaNacimiento, boolean estado) {
+        this.dni = dni;
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
+        this.estado = estado;
+    }
+    
+    
+    
+    
+    
+
     public int getIdAlumno() {
         return idAlumno;
     }
@@ -77,6 +90,10 @@ public class Alumno {
     public String toString() {
         return "ID Alumno=" + idAlumno + ", DNI =" + dni + ", Apellido=" + apellido + ", Nombre=" + nombre + ", Fecha de nacimiento=" + fechaNacimiento + ", Estado=" + estado + '}';
     }
+    
+    
+    
+    
     
     
     
